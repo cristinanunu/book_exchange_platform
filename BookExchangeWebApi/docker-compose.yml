@@ -1,0 +1,10 @@
+version: '3.2'
+services:
+  sql-server-db:
+    container_name: book-exchange-platform
+    image: mcr.microsoft.com/azure-sql-edge
+    ports:
+      - '1433:1433'
+    environment:
+      SA_PASSWORD: 'password_to_change_for_real_cases'
+      ACCEPT_EULA: 'Y'
