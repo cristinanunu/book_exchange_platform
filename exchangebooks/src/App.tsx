@@ -1,9 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import Books from './components/Books';
-import Main from './components/Main';
+import BookDetails from './components/BookDetails';
+import BookForm from './components/BookForm';
+import Main from './components/main/Main';
 import UserForm from './components/UserForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import BooksPerUser from './components/BooksPerUser';
 
 export interface Book {
   id: number;
@@ -19,7 +24,6 @@ export interface NewBook {
   category: string;
   imageUrl: string;
   addedAt: string;
-  // user: User,
 }
 
 export interface User {
@@ -45,17 +49,11 @@ function App() {
   async function getBooks() {
     const response = await client.get('/Books');
     setBooks(response.data);
-    // let data = Array.from(response.data)
-    console.log("that is the response data", response.data)
-    console.log("that is the books", books)
   }
 
   async function getUsers() {
     const response = await client.get('/Users');
     setUsers(response.data);
-    // let data = Array.from(response.data)
-    //   console.log("that is the response", response.data)
-    //   console.log("that is the books", users)
   }
 
   const saveBook = async (book: NewBook) => {
@@ -92,33 +90,25 @@ function App() {
   }, []);
 
   return (
-    <>
-      <p>Hello world</p>
-
-      {books.map((book) => {
-        return (
-          <div key={book.id}>
-            <h3>{book.name}</h3>
-            <p>{book.category}</p>
-            <p>{book.addedAt}</p>
-            <img src={book.imageUrl} alt="books" />
-          </div>
-        )
-      })}
-      <div>
-        {users.map((user) => {
-          return (
-            <div>
-              <h3>{user.name}</h3>
-              <p>{user.email}</p>
-            </div>
-          )
-        })}
-      </div>
-      <Main books={books} />
-      <Books books={books} onFormSubmit={saveBook} />
-      <UserForm onFormSubmit={saveUser} />
-    </>
+    <div className='App'>
+      <Navbar className='nav-bar' bg="light" variant="light">
+        <Container>
+          <Navbar.Brand>Logo</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/books">Books</Nav.Link>
+            <Nav.Link href="/users">Users</Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>      
+        <Routes>
+          <Route path="/" element={ <Main books={books} /> } />
+          <Route path="books" element={ <BookForm onFormSubmit={saveBook} /> } />
+          <Route path="users" element={ <UserForm users={users} onFormSubmit={saveUser} /> } />
+          <Route path='users/:id/books' element={<BooksPerUser books={books} users={users} />} />
+          <Route path='books/:id' element={ <BookDetails books={books} users={users} />} />
+        </Routes>
+    </div>
   );
 }
 

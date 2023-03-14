@@ -1,0 +1,11 @@
+button:hover {
+  cursor: pointer;
+  background-color: #fafafa;
+}
+
+.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 280px;
+}

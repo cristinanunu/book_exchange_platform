@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using bookExchange.Api.Data;
 using bookExchange.Api.Models;
 using bookExchange.Api.Repositories;
 using bookExchange.Api.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,13 +24,14 @@ namespace bookExchange.Api.Controllers
 
         // GET: api/Books
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBook(string? userName)
+        public async Task<ActionResult<IEnumerable<Book>>> GetBook(string? userName, string? category)
         {
           if (_context.Book == null)
           {
               return NotFound();
           }
-          var booksFromDb = await _context.Book.ToListAsync();
+          var booksFromDb = await _context.Book
+              .Include(book => book.User).ToListAsync();
 
           if (booksFromDb.Count == 0)
           {
@@ -46,7 +42,13 @@ namespace bookExchange.Api.Controllers
               }
               await _context.SaveChangesAsync();
               booksFromDb = await _context.Book.ToListAsync();
-              _repositoriesBookRepository.GetAll(userName);
+          }
+          
+          if (!string.IsNullOrEmpty(category))
+          {
+              return _context.Book
+                  .Where(book => book.Category != null && book.Category == category)
+                  .ToList();
           }
 
           return booksFromDb;
@@ -99,6 +101,51 @@ namespace bookExchange.Api.Controllers
             }
 
             return NoContent();
+        }
+        
+        [HttpPut("{id}/user")]
+        public async Task<ActionResult<Book>> PutUserForBook(int id, [FromBody] User user)
+        {
+            var bookFromDb = _context.Book.FirstOrDefault(book => book.Id == id);
+
+            if (bookFromDb == null)
+            {
+                return NotFound();
+            }
+            if (string.IsNullOrEmpty(user.Name))
+            {
+                return BadRequest("User cannot be null or empty.");
+            }
+            
+            var userFromDb = _context.User.Find(user.Id);
+            
+            if (userFromDb == null)
+            {
+                userFromDb = _context.User.Add(new User { Name = user.Name, Email = user.Email}).Entity;
+            }
+
+            bookFromDb.User = userFromDb;
+
+            await _context.SaveChangesAsync();
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!BookExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return bookFromDb;
+            //NoContent();
         }
 
         // POST: api/Books

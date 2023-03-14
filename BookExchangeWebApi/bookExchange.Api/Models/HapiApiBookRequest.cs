@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace bookExchange.Api.Models;
 
-public class HapiApiBook
+public class HapiApiBookRequest
 {
     [JsonPropertyName("book_id")]
     public string Book_id { get; set; }

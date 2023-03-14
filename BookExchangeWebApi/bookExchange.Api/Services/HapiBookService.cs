@@ -15,24 +15,21 @@ public class HapiBookService : IHapiBookService
         {
             Method = HttpMethod.Get,
             RequestUri = new Uri("https://hapi-books.p.rapidapi.com/top/2021"),
-            Headers =
-            {
-                { "X-RapidAPI-Key", "fe1b677b52msh643bc2925d110f0p184f12jsn8ed8ab9e7b41" },
-                { "X-RapidAPI-Host", "hapi-books.p.rapidapi.com" },
-            },
+            //add api keys
         };
         var response = await client.SendAsync(request);
         response.EnsureSuccessStatusCode();
             var body = await response.Content.ReadAsStringAsync();
-            var myBooksList = JsonConvert.DeserializeObject<List<HapiApiBook>>(body);
+            var myBooksList = JsonConvert.DeserializeObject<List<HapiApiBookRequest>>(body);
             Console.WriteLine("this is from console" + myBooksList);
             //mapping
-            return myBooksList.Select(book => new Book
+            var booksFromApi = myBooksList.Select(book => new Book
             {
                 Name = book.Name,
                 Category = book.Category,
                 ImageUrl = book.Cover,
                 AddedAt = DateTime.Now
             }).ToList();
+            return booksFromApi;
     }
 }
