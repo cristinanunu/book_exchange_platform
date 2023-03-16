@@ -1,7 +1,4 @@
-using bookExchange.Api.Data;
 using bookExchange.Api.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 
 namespace bookExchange.Api.Services;
@@ -16,6 +13,9 @@ public class HapiBookService : IHapiBookService
             Method = HttpMethod.Get,
             RequestUri = new Uri("https://hapi-books.p.rapidapi.com/top/2021"),
             //add api keys
+            Headers =
+            {
+            }
         };
         var response = await client.SendAsync(request);
         response.EnsureSuccessStatusCode();

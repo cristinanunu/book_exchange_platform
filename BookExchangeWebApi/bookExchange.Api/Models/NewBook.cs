@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace bookExchange.Api.Models;
 
@@ -13,6 +14,6 @@ public class NewBook
     public string Category { get; set; }
     public string ImageUrl { get; set; }
     
-    [DataType(DataType.Date)]
+    [Column(TypeName = "date")]
     public DateTime AddedAt { get; set; }
 }

@@ -9,6 +9,7 @@ import Main from './components/main/Main';
 import UserForm from './components/UserForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BooksPerUser from './components/BooksPerUser';
+import logo from './assets/logo.png'
 
 export interface Book {
   id: number;
@@ -36,7 +37,6 @@ export interface NewUser {
   name: string;
   email: string;
 }
-
 
 function App() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -84,6 +84,26 @@ function App() {
     }
   }
 
+  const deletePerson = (id: number) => {
+    deleteUser(id);
+    const remainingUsers = users.filter(user => +id !== user.id);
+    setUsers(remainingUsers);
+  }
+
+  async function deleteUser(id: number) {
+    await client.delete(`/Users/${id}`)
+  }
+
+  const deleteBook = (id: number) => {
+    deleteBookById(id);
+    const remainingBooks= books.filter(book => id !== book.id);
+    setBooks(remainingBooks);
+  }
+
+  async function deleteBookById(id: number) {
+    await client.delete(`/Books/${id}`)
+  }
+
   useEffect(() => {
     getBooks();
     getUsers();
@@ -93,20 +113,23 @@ function App() {
     <div className='App'>
       <Navbar className='nav-bar' bg="light" variant="light">
         <Container>
-          <Navbar.Brand>Logo</Navbar.Brand>
+          <Navbar.Brand>
+            <img style={{ width: '70px', height: '70px' }} src={logo} alt="" />
+            </Navbar.Brand>
+          
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/books">Books</Nav.Link>
             <Nav.Link href="/users">Users</Nav.Link>
           </Nav>
         </Container>
-      </Navbar>      
+      </Navbar> 
         <Routes>
           <Route path="/" element={ <Main books={books} /> } />
           <Route path="books" element={ <BookForm onFormSubmit={saveBook} /> } />
           <Route path="users" element={ <UserForm users={users} onFormSubmit={saveUser} /> } />
-          <Route path='users/:id/books' element={<BooksPerUser books={books} users={users} />} />
-          <Route path='books/:id' element={ <BookDetails books={books} users={users} />} />
+          <Route path='users/:id/books' element={<BooksPerUser books={books} />} />
+          <Route path='books/:id' element={ <BookDetails deleteBook={deleteBook} books={books} users={users} />} />
         </Routes>
     </div>
   );

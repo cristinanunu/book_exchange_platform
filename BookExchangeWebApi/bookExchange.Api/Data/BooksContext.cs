@@ -19,7 +19,7 @@ public class BooksContext : DbContext
     {
         modelBuilder.Entity<Book>()
             .HasOne(user => user.User);
-        
+
         var ids = 1;
         var fakeUser = new Faker<User>()
             .RuleFor(m => m.Id, f => ids++)

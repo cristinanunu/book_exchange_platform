@@ -11,7 +11,6 @@ interface UserFormProps {
 }
 
 const UserForm = ({ users, onFormSubmit }: UserFormProps) => {
-
   const [user, setUser] = useState({
     name: '',
     email: '',
@@ -36,7 +35,7 @@ const UserForm = ({ users, onFormSubmit }: UserFormProps) => {
     <Container>
       {users.map((user) => {
         return (
-          <Card className='mt-4' key={user.id}>
+          <Card style={{ boxShadow: "4px 3px 2px #9E9E9E" }} className='mt-4' key={user.id}>
             <Card.Body>
               <Card.Title>{user.name}</Card.Title>
               <Card.Text>{user.email}</Card.Text>
@@ -45,6 +44,8 @@ const UserForm = ({ users, onFormSubmit }: UserFormProps) => {
           </Card>
         )
       })}
+      <br />
+      <br />
       <h1>Add new user</h1>
       <form onSubmit={handleFormSubmit}>
         <FloatingLabel controlId="floatingPassword" label="Name">
