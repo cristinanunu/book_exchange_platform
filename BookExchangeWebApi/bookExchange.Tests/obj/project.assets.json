@@ -12171,19 +12171,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/salt-dev/.nuget/packages/": {}
+    "/home/cristina/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/salt-dev/book_exchange_platform/BookExchangeWebApi/bookExchange.Tests/bookExchange.Tests.csproj",
+      "projectUniqueName": "/home/cristina/code/cristinanunu/book_exchange_platform/BookExchangeWebApi/bookExchange.Tests/bookExchange.Tests.csproj",
       "projectName": "bookExchange.Tests",
-      "projectPath": "/Users/salt-dev/book_exchange_platform/BookExchangeWebApi/bookExchange.Tests/bookExchange.Tests.csproj",
-      "packagesPath": "/Users/salt-dev/.nuget/packages/",
-      "outputPath": "/Users/salt-dev/book_exchange_platform/BookExchangeWebApi/bookExchange.Tests/obj/",
+      "projectPath": "/home/cristina/code/cristinanunu/book_exchange_platform/BookExchangeWebApi/bookExchange.Tests/bookExchange.Tests.csproj",
+      "packagesPath": "/home/cristina/.nuget/packages/",
+      "outputPath": "/home/cristina/code/cristinanunu/book_exchange_platform/BookExchangeWebApi/bookExchange.Tests/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/salt-dev/.nuget/NuGet/NuGet.Config"
+        "/home/cristina/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -12195,8 +12195,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/Users/salt-dev/book_exchange_platform/BookExchangeWebApi/bookExchange.Api/bookExchange.Api.csproj": {
-              "projectPath": "/Users/salt-dev/book_exchange_platform/BookExchangeWebApi/bookExchange.Api/bookExchange.Api.csproj"
+            "/home/cristina/code/cristinanunu/book_exchange_platform/BookExchangeWebApi/bookExchange.Api/bookExchange.Api.csproj": {
+              "projectPath": "/home/cristina/code/cristinanunu/book_exchange_platform/BookExchangeWebApi/bookExchange.Api/bookExchange.Api.csproj"
             }
           }
         }
@@ -12248,7 +12248,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.102/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
       }
     }
   }
