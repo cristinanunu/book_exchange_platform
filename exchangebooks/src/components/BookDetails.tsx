@@ -22,8 +22,8 @@ const BookDetails = ({ books, users, deleteBook }: BookDetailsProps) => {
   const ownerOfBook = users.find((user) => user.id === selectedBook?.user.id)
 
   const handleDelete = (id: number) => {
-    deleteBook(id)
-    navigate('/users', { replace: true })
+    deleteBook(id);
+    navigate('/users', { replace: true });
   }
 
   const togglePopup = () => {
